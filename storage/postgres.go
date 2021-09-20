@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"TransportLogisticSystem/config"
+	"Tsystem/config"
 	"context"
 	"fmt"
 	"log"
