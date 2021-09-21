@@ -103,3 +103,17 @@ func (road RoadHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(true)
 	json.NewEncoder(w).Encode(data)
 }
+
+func (road RoadHandlers) SenderNames(w http.ResponseWriter, r *http.Request) {
+	var err error
+
+	var data []types.Road
+	data, err = road.store.SenderNames()
+
+	if err != nil {
+		e := errors.New(fmt.Sprintf("No data to returned"))
+		json.NewEncoder(w).Encode(e)
+	}
+	json.NewEncoder(w).Encode(data)
+
+}

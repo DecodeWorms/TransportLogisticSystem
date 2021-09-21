@@ -52,3 +52,8 @@ func (store DataStore) UpdateLocation(data types.Road) error {
 func (store DataStore) Delete(tracker string, data types.Road) error {
 	return store.client.db.Debug().Where("tracker = ?", tracker).Unscoped().Delete(&data).Error
 }
+
+func (store DataStore) SenderNames() ([]types.Road, error) {
+	var data []types.Road
+	return data, store.client.db.Debug().Select("sender_name").Find(&data).Error
+}

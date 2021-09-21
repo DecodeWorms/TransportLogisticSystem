@@ -95,3 +95,17 @@ func (sea SeaHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 
 }
+
+func (sea SeaHandler) SenderNames(w http.ResponseWriter, r *http.Request) {
+	var data []types.Sea
+	var err error
+
+	data, err = sea.sea.SenderNames()
+
+	if err != nil {
+		e := errors.New(fmt.Sprintf("No data to returned"))
+		json.NewEncoder(w).Encode(e)
+	}
+	json.NewEncoder(w).Encode(data)
+
+}

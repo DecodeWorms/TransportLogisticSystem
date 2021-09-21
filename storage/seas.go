@@ -49,3 +49,8 @@ func (store Store) Update(data types.Sea) error {
 func (store Store) Delete(data types.Sea) error {
 	return store.client.db.Debug().Where("tracker = ?", data.Tracker).Unscoped().Delete(data).Error
 }
+
+func (store Store) SenderNames() ([]types.Sea, error) {
+	var data []types.Sea
+	return data, store.client.db.Debug().Select("sender_name").Find(&data).Error
+}
