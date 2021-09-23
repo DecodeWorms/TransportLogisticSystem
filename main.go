@@ -51,14 +51,20 @@ func main() {
 	var sea = handlers.NewSea(&seaStore)
 
 	router.HandleFunc("/road/create", road.Create).Methods("POST")
+	router.HandleFunc("/road/creat", road.CreateIdentifiedField).Methods("POST")
 	router.HandleFunc("/road/roads", road.Roads).Methods("GET")
 	router.HandleFunc("/road/road/{tracker}", road.Road).Methods("GET")
+	router.HandleFunc("/road/senderNames", road.SenderNames).Methods("GET")
+	router.HandleFunc("/road/getlocation", road.GetLocation).Methods("GET")
+	router.HandleFunc("/road/id/{tracker}", road.GetId).Methods("GET")
 	router.HandleFunc("/road/changeLocation", road.UpdateLocation).Methods("PUT")
-	router.HandleFunc("/road//delete/{tracker}", road.Delete).Methods("DELETE")
+	router.HandleFunc("/road/changesenderlocation", road.UpdateSenderLocation).Methods("PUT")
+	router.HandleFunc("/road/delete/{tracker}", road.Delete).Methods("DELETE")
 
 	router.HandleFunc("/sea/create", sea.Create).Methods("POST")
 	router.HandleFunc("/sea/seas", sea.Seas).Methods("GET")
 	router.HandleFunc("/sea/sea/{tracker}", sea.Sea).Methods("GET")
+	router.HandleFunc("/sea/senderNames", sea.SenderNames).Methods("GET")
 	router.HandleFunc("/sea/update", sea.Update).Methods("PUT")
 	router.HandleFunc("/sea/delete", sea.Delete).Methods("DELETE")
 

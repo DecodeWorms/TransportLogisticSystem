@@ -33,7 +33,7 @@ func (road RoadHandlers) Create(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Datas are being passed...")
 
-	err = road.store.Create(&data)
+	err = road.store.Create(data)
 	if err != nil {
 		json.NewEncoder(w).Encode(err)
 
@@ -107,7 +107,7 @@ func (road RoadHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 func (road RoadHandlers) SenderNames(w http.ResponseWriter, r *http.Request) {
 	var err error
 
-	var data []types.Road
+	var data []*types.Road
 	data, err = road.store.SenderNames()
 
 	if err != nil {
@@ -116,4 +116,58 @@ func (road RoadHandlers) SenderNames(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(data)
 
+}
+
+func (road RoadHandlers) GetLocation(w http.ResponseWriter, r *http.Request) {
+	var data []types.Road
+	var err error
+	// param := mux.Vars(r)
+	// trc := param["tracker"]
+
+	data, err = road.store.GetLocation()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.NewEncoder(w).Encode(data)
+}
+
+func (road RoadHandlers) GetId(w http.ResponseWriter, r *http.Request) {
+	var data types.Road
+	var err error
+
+	params := mux.Vars(r)
+	trc := params["tracker"]
+
+	data, err = road.store.GetId(trc)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(data)
+}
+
+func (road RoadHandlers) UpdateSenderLocation(w http.ResponseWriter, r *http.Request) {
+	var data types.Road
+	err := json.NewDecoder(r.Body).Decode(&data)
+
+	params := mux.Vars(r)
+	trc := params["tracker"]
+
+	if err != nil {
+		e := errors.New(fmt.Sprintf("Un able to decode json"))
+		json.NewEncoder(w).Encode(e)
+	}
+	err = road.store.UpdateSenderLocation(trc, data)
+
+}
+
+func (road RoadHandlers) CreateIdentifiedField(w http.ResponseWriter, r *http.Request) {
+	var data types.Road
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	road.store.CreateIdentifiedField(data)
 }
