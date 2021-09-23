@@ -48,10 +48,6 @@ func (store DataStore) UpdateLocation(data types.Road) error {
 	return store.client.db.Model(&types.Road{}).Where("tracker =?", data.Tracker).Update("receiver_location", data.ReceiverLocation).Error
 }
 
-// func (store DataStore) Delete(tracker string, data types.Road) error {
-// 	return store.client.db.Debug().Where("tracker = ?", tracker).Unscoped().Delete(&data).Error
-// }
-
 func (store DataStore) Delete(tracker string, data types.Road) error {
 	return store.client.db.Where("tracker = ?", tracker).Unscoped().Delete(&data).Error
 }
