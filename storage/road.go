@@ -48,6 +48,12 @@ func (store DataStore) UpdateLocation(data types.Road) error {
 	return store.client.db.Model(&types.Road{}).Where("tracker =?", data.Tracker).Update("receiver_location", data.ReceiverLocation).Error
 }
 
+func (store DataStore) GetSenderAndReceiverName(tracker string) (types.Road, error) {
+	var data types.Road
+
+	return data, store.client.db.Select("sender_name", "receiver_name").Where("tracker = ?", tracker).Find(&data).Error
+}
+
 func (store DataStore) Delete(tracker string, data types.Road) error {
 	return store.client.db.Where("tracker = ?", tracker).Unscoped().Delete(&data).Error
 }

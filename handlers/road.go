@@ -88,6 +88,22 @@ func (road RoadHandlers) UpdateLocation(w http.ResponseWriter, r *http.Request) 
 
 }
 
+func (road RoadHandlers) GetSenderAndReceiverName(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	trc := params["tracker"]
+
+	var data types.Road
+	var err error
+
+	data, err = road.store.GetSenderAndReceiverName(trc)
+
+	if err != nil {
+		e := errors.New(fmt.Sprintf("Unable to retrieve datas info from the server %v", err))
+		json.NewEncoder(w).Encode(e)
+	}
+	json.NewEncoder(w).Encode(data)
+}
+
 func (road RoadHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 	var data types.Road
 

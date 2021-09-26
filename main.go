@@ -57,6 +57,7 @@ func main() {
 	router.HandleFunc("/road/senderNames", road.SenderNames).Methods("GET")
 	router.HandleFunc("/road/getlocation", road.GetLocation).Methods("GET")
 	router.HandleFunc("/road/id/{tracker}", road.GetId).Methods("GET")
+	router.HandleFunc("/road/getsenderandreceivername/{tracker}", road.GetSenderAndReceiverName).Methods("GET")
 	router.HandleFunc("/road/changeLocation", road.UpdateLocation).Methods("PUT")
 	router.HandleFunc("/road/changesenderlocation", road.UpdateSenderLocation).Methods("PUT")
 	router.HandleFunc("/road/delete/{tracker}", road.Delete).Methods("DELETE")
